@@ -1,5 +1,8 @@
 package com.bank.config;
-
+/*
+ * This class establishes Account Security by using Authentication Manager and Password Encoder
+ * 
+ * */
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
