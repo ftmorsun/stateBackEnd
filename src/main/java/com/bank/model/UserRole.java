@@ -13,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -21,31 +20,34 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="user_role")
+@Table(name = "user_role")
 @Getter
 @Setter
 @NoArgsConstructor
-
 public class UserRole {
-	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long userRoleId;
-	
-	@OneToMany(fetch=FetchType.EAGER)
-	@JoinColumn(name="user_id")
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id")
 	private User user;
-	
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="role_id")
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "role_id")
 	private Role role;
 
-	//Create a UserRole
-	public UserRole( User user, Role role) {
+	public UserRole(User user, Role role) {
 		this.user = user;
 		this.role = role;
 	}
-	
-	
 
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+	
 }
