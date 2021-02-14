@@ -15,51 +15,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
-
 @Data
 @Entity
-
-
-
 public class Account {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Long accountNumber;
 	private BigDecimal accountBalance;
-	
+
 	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<Transaction> transactions;
-	
-
-	public Account() {
-		super();
-	}
-
-	public Long getAccountNumber() {
-		return accountNumber;
-	}
-
-	public void setAccountNumber(Long accountNumber) {
-		this.accountNumber = accountNumber;
-	}
-
-	public BigDecimal getAccountBalance() {
-		return accountBalance;
-	}
-
-	public void setAccountBalance(BigDecimal accountBalance) {
-		this.accountBalance = accountBalance;
-	}
-
-	public List<Transaction> getTransactions() {
-		return transactions;
-	}
-
-	public void setTransactions(List<Transaction> transactions) {
-		this.transactions = transactions;
-	}
-
-	
 }

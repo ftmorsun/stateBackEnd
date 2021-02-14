@@ -1,17 +1,8 @@
 package com.bank.model;
-/*
- * 
- * User is a part of Spring Security Framework
- * to identify clients based than their credentials 
- * User implements UserDetails interface
- * with below methods to identify user details with authorities
- * before allowing user to interact with application 
- * 
- * Fatma Orsun -Jan 2021
- * */
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -42,7 +33,7 @@ import lombok.ToString;
 public class User implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY) //Auto generation of the ID
 	@Column(name = "userId", nullable = false, updatable = false)
 	private Long userId;
 	private String username;
@@ -57,24 +48,11 @@ public class User implements UserDetails {
 	@JsonIgnore
 	private Set<UserRole> userRoles = new HashSet<>();
 
-	public Set<UserRole> getUserRoles() {
-		return userRoles;
-	}
-
-	public void setUserRoles(Set<UserRole> userRoles) {
-		this.userRoles = userRoles;
-	}
-
-	public Account getAccount() {
-		return account;
-	}
-
-	public void setAccount(Account account) {
-		this.account = account;
-	}
-
 	@OneToOne
-	private Account account;
+	private Account account; 
+	
+	@OneToMany
+	private List<Recipient> recipients;
 	
 	public User(String firstName, String lastName , String username, String email, String password) {
 		this.firstName = firstName;
@@ -83,7 +61,7 @@ public class User implements UserDetails {
 		this.email = email;
 		this.password = password;
 	}
-
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Set<GrantedAuthority> authorities = new HashSet<>();
@@ -119,46 +97,6 @@ public class User implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return enabled;
-	}
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 }

@@ -6,7 +6,6 @@ import java.util.Set;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bank.DAO.UserDAO;
+import com.bank.dao.UserDAO;
 import com.bank.model.Role;
 import com.bank.model.User;
 import com.bank.model.UserRole;
@@ -37,12 +36,10 @@ import com.bank.util.JwtUtil;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/auth")
-
-
 public class LoginController {
 
 	@Autowired
-	private AuthenticationManager authenticationManager;
+	AuthenticationManager authenticationManager;
 
 	@Autowired
 	UserRepo userRepo;
@@ -59,12 +56,13 @@ public class LoginController {
 	@Autowired
 	PasswordEncoder encoder;
 
+	
 	@Autowired
 	private JwtUtil jwtUtil;
 
 	@PostMapping("/login")
-	public ResponseEntity<LoginResponse> authenticateUser(@RequestBody LoginForm loginRequest) {
-
+	public ResponseEntity<LoginResponse> authenticateUser(@Valid @RequestBody LoginForm loginRequest) {
+// storing principle object
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
@@ -105,10 +103,11 @@ public class LoginController {
 			userRoles.add(new UserRole(user, role));
 		});
 		user.setUserRoles(userRoles);
-		user.setAccount(accountService.createAccount());
+		user.setAccount(accountService.createAccount());		
 		userRepo.save(user);
 		response.setMessage("User Registered Successfully!");
 		response.setSuccess(true);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 }
+

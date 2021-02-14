@@ -1,11 +1,5 @@
 package com.bank.model;
-/*
- * UserRole is a part of User authentication 
- * Users can have multiple roles USER, ADMIN, MANAGER etc roles to
- * execute on the application. 
- * 
- * Fatma Orsun -Jan 2021
- * */
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -41,13 +35,4 @@ public class UserRole {
 		this.user = user;
 		this.role = role;
 	}
-
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
-	
 }
